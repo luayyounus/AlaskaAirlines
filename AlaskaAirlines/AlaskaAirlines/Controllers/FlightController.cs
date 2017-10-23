@@ -14,7 +14,7 @@ namespace AlaskaAirlines.Controllers
         [HttpGet]
         public ActionResult Search()
         {
-            return RedirectToAction("Index", "Flights");
+            return RedirectToAction("Index", "Home");
 
         }
 
@@ -50,10 +50,10 @@ namespace AlaskaAirlines.Controllers
                 }
             }
 
-            return RedirectToAction("Availability", "Flights", new { fromAirport = fromCode, toAirport = toCode });
+            return RedirectToAction("Availability", "Flight", new { fromAirport = fromCode, toAirport = toCode });
         }
 
-        [Route("flights/availability/{fromAirport:maxlength(3):minlength(3)}/{toAirport:maxlength(3):minlength(3)}/{sortBy?}")]
+        [Route("flight/availability/{fromAirport:maxlength(3):minlength(3)}/{toAirport:maxlength(3):minlength(3)}/{sortBy?}")]
         [HttpGet]
         public ActionResult Availability(string fromAirport, string toAirport, string sortBy)
         {
