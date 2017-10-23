@@ -13,6 +13,9 @@ namespace AlaskaAirlines
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            //Enabling the Attribute Routing
+            routes.MapMvcAttributeRoutes();
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

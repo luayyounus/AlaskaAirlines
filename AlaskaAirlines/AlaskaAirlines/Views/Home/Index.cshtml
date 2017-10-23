@@ -1,4 +1,67 @@
-﻿@{
+﻿@model AlaskaAirlines.ViewModels.AirportsViewModel
+@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h2 class="text-center" style="margin: 2% 0 2% 0;
+                        color: #EE765B;
+                        text-shadow: white 0px 0px 1px;
+                        stroke-linejoin: round;
+                        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+                        font-weight: 600;
+                        font-style: italic;">
+    Where do you want to fly?
+</h2>
+
+@*Moving Airplane Image*@
+<img src="~/Content/icons/flying-airplane.png" class="airplane-animate airplane-background-mobile-tablet" />
+
+@using (Html.BeginForm("Search", "Flights"))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class=" col-lg-3 col-lg-offset-3 mobile-col-lg-3">
+            @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", placeholder = "From" })
+            @Html.ValidationMessageFor(m => m.FromAirport)
+        </div>
+
+        <div class=" col-lg-3 mobile-col-lg-3">
+            @Html.TextBoxFor(m => m.ToAirport, new { @class = "form-control input-lg", placeholder = "To" })
+            @Html.ValidationMessageFor(m => m.ToAirport)
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary mobile-center-block">
+                <img src="~/Content/icons/form-send-button-right-arrow.png" style="max-height: 40px;" />
+            </button>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#FromAirport, #ToAirport").autocomplete({
+            source: function (request, response) {
+                $.ajax({
+                    url: "/Home/AutoComplete",
+                    type: "POST",
+                    dataType: "json",
+                    data: { Prefix: request.term },
+                    success: function (data) {
+                        response($.map(data, function (item) {
+                            return { label: item.Name, value: item.Name };
+                        }))
+
+                    }
+                })
+            },
+            change: function (event, ui) {
+                if (!ui.item) {
+                    $(this).val('');
+                    $this.focus();
+                }
+            },
+            autoFocus: true,
+        });
+    })
+</script> 
