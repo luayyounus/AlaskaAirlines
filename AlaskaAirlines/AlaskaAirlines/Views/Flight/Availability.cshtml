@@ -45,7 +45,7 @@ else
                     @Html.ActionLink(
                    "Flight",
                    "Availability",
-                   "Flights",
+                   "Flight",
                    new { fromAirport = Model.FromAirport, toAirport = Model.ToAirport, sortBy = ViewBag.SortByFlight },
                    new { @class = "SortButton" })
                 </li>
@@ -54,7 +54,7 @@ else
                     @Html.ActionLink(
                    "Departure",
                    "Availability",
-                   "Flights",
+                   "Flight",
                    new { fromAirport = Model.FromAirport, toAirport = Model.ToAirport, sortBy = ViewBag.SortByDeparture },
                    new { @class = "SortButton" })
                 </li>
@@ -63,7 +63,7 @@ else
                 @Html.ActionLink(
                    "Price",
                    "Availability",
-                   "Flights",
+                   "Flight",
                    new { fromAirport = Model.FromAirport, toAirport = Model.ToAirport, sortBy = ViewBag.SortByPrice },
                    new { @class = "SortButton" })
                 </li>
