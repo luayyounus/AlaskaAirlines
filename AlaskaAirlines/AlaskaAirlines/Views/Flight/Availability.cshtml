@@ -22,10 +22,12 @@
     <div class="progress-bar progress-bar-success" style="width: 100%"></div>
 </div>
 
+@* Display no flights Banner when no flights available *@
 @if (Model.Flights.Count == 0)
 {
     <div class="panel panel-warning" style="margin: 5% 30% 0 30%;">
         <div class="panel-body">
+
             <h4 style="float: left;">
                 No flights available. Please pick different airports.
             </h4>
