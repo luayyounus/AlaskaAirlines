@@ -167,8 +167,6 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\csv\airports.csv" />
-    <Content Include="Content\csv\flights-csv.csv" />
     <Content Include="Content\fonts\bariol-regular-italic.ttf" />
     <Content Include="Content\fonts\bariol_regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
@@ -179,6 +177,8 @@
     <Content Include="Content\fonts\Quicksand-Light.ttf" />
     <Content Include="Content\fonts\Quicksand-Medium.ttf" />
     <Content Include="Content\fonts\Quicksand-Regular.ttf" />
+    <Content Include="Models\Csv\airports.csv" />
+    <Content Include="Models\Csv\flights.csv" />
     <None Include="Scripts\jquery-3.2.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -200,7 +200,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Airport.cs" />
-    <Compile Include="Models\Cvs.cs" />
+    <Compile Include="Models\Csv.cs" />
     <Compile Include="Models\Flight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
