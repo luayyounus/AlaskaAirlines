@@ -16,7 +16,6 @@ namespace AlaskaAirlines.Controllers
             return View();
         }
 
-        //Form Autocomplete Feature
         [HttpPost]
         public JsonResult AutoComplete(string Prefix)
         {
@@ -27,15 +26,10 @@ namespace AlaskaAirlines.Controllers
             return Json(Airport, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Search()
-        {
-            return View();
-        }
-
         [HttpPost]
         public ActionResult Search(AirportsViewModel airportsViewModel)
         {
-            //checking if the input form is Empty
+            //Form Validation
             if (!ModelState.IsValid)
             {
                 var sameViewModel = new AirportsViewModel
@@ -49,7 +43,7 @@ namespace AlaskaAirlines.Controllers
 
             List<Airport> listOfAirports = Cvs.GetAllAirports();
 
-            //Grabbing the Code for the Airports Names entered in the Form
+            //Matching the airport's code with CSV
             var fromCode = "";
             var toCode = "";
 
