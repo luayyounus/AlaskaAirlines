@@ -22,12 +22,12 @@
 
 
 @* Search Form *@
-@using (Html.BeginForm("Search", "Home"))
+@using (Html.BeginForm("Search", "Home", FormMethod.Post, new { id = "search-form" }))
 {
     @Html.AntiForgeryToken()
     <div class="home-page form-group">
         <div class=" col-lg-3 col-lg-offset-3 mobile-col-lg-3">
-            @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", placeholder = "Eg. Seattle" })
+            @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", placeholder = "Eg. Seattle", autocomplete = "on" })
             @Html.ValidationMessageFor(m => m.FromAirport)
         </div>
 
@@ -62,7 +62,7 @@
 }
 else
 {
-
+    // Flight itinerary Bannerhe at t top of the page
     <div class="flights-page panel panel-default" style="margin: 0 5% 0 5%;">
         <div class="panel-body">
             <div class="text-center">
@@ -78,6 +78,7 @@ else
         </div>
     </div>
 
+    // Sort By - Panel
     <div class="flights-page panel panel-default">
         <div class="panel-body" style="padding: 0;">
             <ul class="pager" style="font-size: larger; font-weight: 800; margin: 3% 5% 3% 5%; float: right;">
@@ -113,6 +114,7 @@ else
         </div>
     </div>
 
+    // Table Rendering
     <table class="flights-page table table-striped table-hover" style="width: 80%; text-align:center; margin: 0 10% 0 10%; font-size: x-large;">
         <thead>
             <tr class="panel" style="background-color: #2c3e50; color: #f9f9f9;">
@@ -181,8 +183,8 @@ else
                     }
                 })
             },
-            change: function (event, ui) {
-                if (!ui.item) {
+            change: function (event, select) {
+                if (!select.item) {
                     $(this).val('');
                     $this.focus();
                     $()
