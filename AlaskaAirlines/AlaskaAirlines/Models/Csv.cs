@@ -7,13 +7,13 @@ using System.Web;
 
 namespace AlaskaAirlines.Models
 {
-    public class Cvs
+    public class Csv
     {
         public static List<Flight> SearchFlights(string fromAirport, string toAirport)
         {
             try
             {
-                using (var reader = new StreamReader(@"C:\Users\Luay\Dropbox\development\C#\AlaskaAirlines\AlaskaAirlines\Content\csv\flights-csv.csv"))
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/Models/Csv/flights.csv"))
                 {
                     var csv = new CsvReader(reader);
                     IEnumerable<Flight> flights = csv.GetRecords<Flight>();
@@ -37,7 +37,7 @@ namespace AlaskaAirlines.Models
         {
             try
             {
-                using (var reader = new StreamReader(@"C:\Users\Luay\Dropbox\development\C#\AlaskaAirlines\AlaskaAirlines\Content\csv\airports.csv"))
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/Models/Csv/airports.csv"))
                 {
                     var csv = new CsvReader(reader);
                     IEnumerable<Airport> airports = csv.GetRecords<Airport>();

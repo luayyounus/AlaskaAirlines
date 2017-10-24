@@ -19,7 +19,7 @@ namespace AlaskaAirlines.Controllers
             ViewBag.SortByDeparture = "Departure";
             ViewBag.SortByPrice = "Price";
 
-            List<Flight> flights = Cvs.SearchFlights(fromAirport, toAirport);
+            List<Flight> flights = Csv.SearchFlights(fromAirport, toAirport);
             List<Flight> sortedFlights = new List<Flight>();
 
             if (!String.IsNullOrWhiteSpace(sortBy))

@@ -167,8 +167,8 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\csv\airports.csv" />
-    <Content Include="Content\csv\flights-csv.csv" />
+    <Content Include="Models\csv\airports.csv" />
+    <Content Include="Models\csv\flights.csv" />
     <Content Include="Content\fonts\bariol-regular-italic.ttf" />
     <Content Include="Content\fonts\bariol_regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
@@ -201,7 +201,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Airport.cs" />
-    <Compile Include="Models\Cvs.cs" />
+    <Compile Include="Models\Csv.cs" />
     <Compile Include="Models\Flight.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\AirportsViewModel.cs" />
