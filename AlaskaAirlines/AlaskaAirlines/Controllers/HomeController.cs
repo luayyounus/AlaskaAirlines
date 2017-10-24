@@ -13,13 +13,20 @@ namespace AlaskaAirlines.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            return View();
+            List<Flight> flights = Csv.SearchFlights("", "");
+            var viewModel = new SearchViewModel
+            {
+                FromAirport = "",
+                ToAirport = "",
+                Flights = flights
+            };
+            return View(viewModel);
         }
 
         [HttpPost]
         public JsonResult AutoComplete(string Prefix)
         {
-            List<Airport> listOfAirports = Cvs.GetAllAirports();
+            List<Airport> listOfAirports = Csv.GetAllAirports();
 
             var Airport = (from A in listOfAirports where A.Name.ToLower().Contains(Prefix.ToLower()) select new { A.Name });
 
@@ -27,21 +34,23 @@ namespace AlaskaAirlines.Controllers
         }
 
         [HttpPost]
-        public ActionResult Search(AirportsViewModel airportsViewModel)
+        public ActionResult Search(SearchViewModel searchViewModel)
         {
+
             //Form Validation
             if (!ModelState.IsValid)
             {
-                var sameViewModel = new AirportsViewModel
+                var sameViewModel = new SearchViewModel
                 {
-                    FromAirport = airportsViewModel.FromAirport,
-                    ToAirport = airportsViewModel.ToAirport,
+                    FromAirport = searchViewModel.FromAirport,
+                    ToAirport = searchViewModel.ToAirport,
+                    Flights = new List<Flight>()
                 };
 
                 return View("Index", sameViewModel);
             }
 
-            List<Airport> listOfAirports = Cvs.GetAllAirports();
+            List<Airport> listOfAirports = Csv.GetAllAirports();
 
             //Matching the airport's code with CSV
             var fromCode = "";
@@ -49,17 +58,59 @@ namespace AlaskaAirlines.Controllers
 
             foreach (Airport airport in listOfAirports)
             {
-                if (airport.Name == airportsViewModel.FromAirport)
+                if (airport.Name == searchViewModel.FromAirport)
                 {
                     fromCode = airport.Code;
                 }
-                if (airport.Name == airportsViewModel.ToAirport)
+                if (airport.Name == searchViewModel.ToAirport)
                 {
                     toCode = airport.Code;
                 }
             }
 
-            return RedirectToAction("Availability", "Flight", new { fromAirport = fromCode, toAirport = toCode });
+            return RedirectToAction("Availability", "Home", new { fromAirport = fromCode, toAirport = toCode });
+        }
+
+
+        [Route("home/availability/{fromAirport:maxlength(3):minlength(3)}/{toAirport:maxlength(3):minlength(3)}/{sortBy?}")]
+        [HttpGet]
+        public ActionResult Availability(string fromAirport, string toAirport, string sortBy)
+        {
+
+            ViewBag.SortByFlight = string.IsNullOrWhiteSpace(sortBy) ? "Flight" : "";
+            ViewBag.SortByDeparture = "Departure";
+            ViewBag.SortByPrice = "Price";
+
+            List<Flight> flights = Csv.SearchFlights(fromAirport, toAirport);
+            List<Flight> sortedFlights = new List<Flight>();
+
+            if (!String.IsNullOrWhiteSpace(sortBy))
+            {
+                if (sortBy == "Flight")
+                {
+                    sortedFlights = flights.OrderBy(flight => flight.FlightNumber).ToList();
+                }
+                else if (sortBy == "Departure")
+                {
+                    sortedFlights = flights.OrderBy(flightTime => flightTime.Departs.TimeOfDay).ToList();
+                }
+                else if (sortBy == "Price")
+                {
+                    sortedFlights = flights.OrderBy(flightPrice => flightPrice.MainCabinPrice).ToList();
+                }
+            }
+            else
+            {
+                sortedFlights = flights;
+            }
+
+            var viewModel = new SearchViewModel
+            {
+                FromAirport = fromAirport,
+                ToAirport = toAirport,
+                Flights = sortedFlights
+            };
+            return View("index", viewModel);
         }
     }
 }

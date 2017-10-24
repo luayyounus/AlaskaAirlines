@@ -1,18 +1,21 @@
-﻿@model AlaskaAirlines.ViewModels.AirportsViewModel
+﻿@model AlaskaAirlines.ViewModels.SearchViewModel
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="text-center" style="margin: 2% 0 2% 0;
+<div class="home-page">
+    <h2 class="text-center" style="margin: 2% 0 2% 0;
                         color: #EE765B;
                         text-shadow: white 0px 0px 1px;
                         stroke-linejoin: round;
                         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
                         font-weight: 600;
                         font-style: italic;">
-    Where do you want to fly?
-</h2>
+        Where do you want to fly?
+    </h2>
+</div>
 
 @*Moving Airplane Image*@
 <img src="~/Content/icons/flying-airplane.png" class="airplane-animate airplane-background-mobile-tablet" />
@@ -22,7 +25,7 @@
 @using (Html.BeginForm("Search", "Home"))
 {
     @Html.AntiForgeryToken()
-    <div class="form-group">
+    <div class="home-page form-group">
         <div class=" col-lg-3 col-lg-offset-3 mobile-col-lg-3">
             @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", placeholder = "Eg. Seattle" })
             @Html.ValidationMessageFor(m => m.FromAirport)
@@ -39,6 +42,125 @@
         </div>
     </div>
 }
+
+
+@* Display no flights Banner when no flights available *@
+@if (Model.Flights.Count == 0)
+{
+    <div class="flights-page panel panel-warning" style="margin: 5% 30% 0 30%;">
+        <div class="panel-body">
+
+            <h4 style="float: left;">
+                No flights available. Please pick different airports.
+            </h4>
+
+            <a href="/" class="btn btn-info" style="float: right" ;>Go Back</a>
+
+        </div>
+    </div>
+
+}
+else
+{
+
+    <div class="flights-page panel panel-default" style="margin: 0 5% 0 5%;">
+        <div class="panel-body">
+            <div class="text-center">
+                <h1>
+                    @Model.FromAirport
+                    <img src="~/Content/icons/arrow-pointing-to-right.png" style="max-height: 50px; margin: 0 15px 0 15px; padding: 0;" />
+                    @Model.ToAirport
+                </h1>
+            </div>
+        </div>
+        <div class="flights-page progress progress-striped" style="margin: auto;">
+            <div class="progress-bar progress-bar-success" style="width: 100%"></div>
+        </div>
+    </div>
+
+    <div class="flights-page panel panel-default">
+        <div class="panel-body" style="padding: 0;">
+            <ul class="pager" style="font-size: larger; font-weight: 800; margin: 3% 5% 3% 5%; float: right;">
+                <li style="margin-right: 10px;">Sort results by</li>
+
+                <li>
+                    @Html.ActionLink(
+                   "Departure",
+                   "Availability",
+                   "Home",
+                   new { fromAirport = Model.FromAirport, toAirport = Model.ToAirport, sortBy = ViewBag.SortByDeparture },
+                   new { @class = "SortButton" })
+                </li>
+
+                <li>
+                    @Html.ActionLink(
+                   "Price",
+                   "Availability",
+                   "Home",
+                   new { fromAirport = Model.FromAirport, toAirport = Model.ToAirport, sortBy = ViewBag.SortByPrice },
+                   new { @class = "SortButton" })
+                </li>
+
+                <li>
+                    @Html.ActionLink(
+                   "Flight",
+                   "Availability",
+                   "Home",
+                   new { fromAirport = Model.FromAirport, toAirport = Model.ToAirport, sortBy = ViewBag.SortByFlight },
+                   new { @class = "SortButton" })
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <table class="flights-page table table-striped table-hover" style="width: 80%; text-align:center; margin: 0 10% 0 10%; font-size: x-large;">
+        <thead>
+            <tr class="panel" style="background-color: #2c3e50; color: #f9f9f9;">
+                <th>Flight #</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Main Cabin</th>
+                <th>First Class</th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (var flight in Model.Flights)
+                {
+                    var departureTime = flight.Departs.ToString("hh:mm tt");
+                    var arrivalTime = flight.Arrives.ToString("hh:mm tt");
+                    <tr>
+                        <td>
+                            @flight.FlightNumber
+                        </td>
+                        <td>
+                            <b>@departureTime</b> <small>(@flight.From)</small>
+                        </td>
+                        <td style="width: 200px; padding-top: 30px; padding-bottom: 0;">
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-warning" style="width: 100%;"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <b>@arrivalTime</b> <small>(@flight.To)</small>
+                        </td>
+                        <td style="font-weight: 600;">
+                            USD @flight.MainCabinPrice
+                        </td>
+                        <td style="font-weight: 600;">
+                            USD @flight.FirstClassPrice
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+    <script>
+        $('.home-page').hide();
+        $('.flights-page').show();
+    </script>
+                }
 
 
 @* Auto Complete *@
