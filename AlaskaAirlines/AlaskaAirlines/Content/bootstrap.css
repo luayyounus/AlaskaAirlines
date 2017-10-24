@@ -37,6 +37,11 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+
+.flights-page {
+    display: none;
+}
+
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
@@ -2058,9 +2063,10 @@ pre {
 
 @media (min-width: 1200px) {
     .airplane-animate {
+        margin-top: 10%;
         width: 70px;
         height: 70px;
-        position: relative;
+        position: fixed;
         z-index: -1;
         -webkit-animation-name: airplane;
         -webkit-animation-duration: 40s;

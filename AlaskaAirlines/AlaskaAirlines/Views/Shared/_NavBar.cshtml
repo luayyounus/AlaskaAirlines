@@ -15,11 +15,11 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="/">HOME</a></li>
+                <li><a class="home-button-nav" >HOME</a></li>
             </ul>
 
             <ul class="nav navbar-nav">
-                <li><a href="/">FLIGHTS</a></li>
+                <li><a class="flights-button-nav" >FLIGHTS</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
@@ -32,3 +32,15 @@
         </div>
     </div>
 </nav>
+
+<script>
+    $('.home-button-nav').click(function () {
+        $('.flights-page').hide()
+        $('.home-page').show()
+    })
+
+    $('.flights-button-nav').click(function () {
+        $('.home-page').hide()
+        $('.flights-page').show()
+    })
+</script>
