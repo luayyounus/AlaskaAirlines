@@ -13,7 +13,7 @@ namespace AlaskaAirlines.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            List<Flight> flights = Csv.SearchFlights("", "");
+            List<Flight> flights = new List<Flight>();
             var viewModel = new SearchViewModel
             {
                 FromAirport = "",
@@ -58,11 +58,11 @@ namespace AlaskaAirlines.Controllers
 
             foreach (Airport airport in listOfAirports)
             {
-                if (airport.Name == searchViewModel.FromAirport)
+                if (airport.Name == searchViewModel.FromAirport || airport.Code == searchViewModel.FromAirport)
                 {
                     fromCode = airport.Code;
                 }
-                if (airport.Name == searchViewModel.ToAirport)
+                if (airport.Name == searchViewModel.ToAirport || airport.Code == searchViewModel.ToAirport)
                 {
                     toCode = airport.Code;
                 }
