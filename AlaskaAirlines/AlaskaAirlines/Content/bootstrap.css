@@ -6923,7 +6923,7 @@ button.list-group-item-danger {
 }
 
 .panel-body {
-    padding: 0;
+    padding: 15px;
 }
 
 .panel-heading {
@@ -7280,7 +7280,7 @@ button.list-group-item-danger {
     }
 
 .panel-warning {
-    border-color: #f39c12;
+    border: 1px solid #f39c12;
 }
 
     .panel-warning > .panel-heading {
