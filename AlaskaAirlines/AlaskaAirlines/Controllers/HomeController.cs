@@ -72,44 +72,20 @@ namespace AlaskaAirlines.Controllers
         }
 
 
-        [Route("home/availability/{fromAirport:maxlength(3):minlength(3)}/{toAirport:maxlength(3):minlength(3)}/{sortBy?}")]
+        [Route("home/availability/{fromAirport:maxlength(3):minlength(3)}/{toAirport:maxlength(3):minlength(3)}/")]
         [HttpGet]
-        public ActionResult Availability(string fromAirport, string toAirport, string sortBy)
+        public ActionResult Availability(string fromAirport, string toAirport)
         {
 
-            ViewBag.SortByFlight = string.IsNullOrWhiteSpace(sortBy) ? "Flight" : "";
-            ViewBag.SortByDeparture = "Departure";
-            ViewBag.SortByPrice = "Price";
-
             List<Flight> flights = Csv.SearchFlights(fromAirport, toAirport);
-            List<Flight> sortedFlights = new List<Flight>();
-
-            if (!String.IsNullOrWhiteSpace(sortBy))
-            {
-                if (sortBy == "Flight")
-                {
-                    sortedFlights = flights.OrderBy(flight => flight.FlightNumber).ToList();
-                }
-                else if (sortBy == "Departure")
-                {
-                    sortedFlights = flights.OrderBy(flightTime => flightTime.Departs.TimeOfDay).ToList();
-                }
-                else if (sortBy == "Price")
-                {
-                    sortedFlights = flights.OrderBy(flightPrice => flightPrice.MainCabinPrice).ToList();
-                }
-            }
-            else
-            {
-                sortedFlights = flights;
-            }
 
             var viewModel = new SearchViewModel
             {
                 FromAirport = fromAirport,
                 ToAirport = toAirport,
-                Flights = sortedFlights
+                Flights = flights
             };
+
             return View("index", viewModel);
         }
     }
