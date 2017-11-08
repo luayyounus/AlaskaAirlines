@@ -16,153 +16,26 @@
 
 
 @* Search Form *@
-@using (Html.BeginForm("Search", "Home"))
-{
-    @Html.AntiForgeryToken()
-    <div class="home-page form-group">
-        <div class=" col-lg-3 col-lg-offset-3 mobile-col-lg-3">
-            @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", id = "FromAirport", placeholder = "Eg. Seattle" })
-            @Html.ValidationMessageFor(m => m.FromAirport)
-        </div>
-
-        <div class=" col-lg-3 mobile-col-lg-3">
-            @Html.TextBoxFor(m => m.ToAirport, new { @class = "form-control input-lg", id = "ToAirport", placeholder = "To City" })
-            @Html.ValidationMessageFor(m => m.ToAirport)
-        </div>
-        <div>
-            <button type="submit" id="submit-button" class="btn btn-primary mobile-center-block">
-                <img src="~/Content/icons/form-send-button-right-arrow.png" />
-            </button>
-        </div>
-    </div>
-}
-
-@* Display no flights Banner when no flights available *@
-@if (Model.Flights == null)
-{
-
-}
-else if (Model.Flights.Count == 0)
-{
-    <div class="flights-page panel panel-warning" id="no-flights-available">
-        <div class="panel-body">
-
-            <h4 class="pull-left">
-                No flights available. Please pick different airports.
-            </h4>
-
-            <a href="/" class="btn btn-info pull-right">Go Back</a>
-        </div>
-    </div>
-    <script>
-        $('.home-page').hide();
-        $('.flights-page').show();
-    </script>
-}
-else
-{
-    //render flights table
-    <div class="flights-page panel panel-default" id="from-to-banner">
-        <div class="panel-body">
-            <div class="text-center">
-                <h1>
-                    @Model.FromAirport
-                    <img src="~/Content/icons/arrow-pointing-to-right.png" />
-                    @Model.ToAirport
-                </h1>
-            </div>
-        </div>
-        <div class="flights-page progress progress-striped">
-            <div class="progress-bar progress-bar-success"></div>
-        </div>
+@Html.AntiForgeryToken()
+<div class="home-page form-group">
+    <div class=" col-lg-3 col-lg-offset-3 mobile-col-lg-3">
+        @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", placeholder = "Eg. Seattle" })
+        @Html.ValidationMessageFor(m => m.FromAirport)
     </div>
 
-    <div class="flights-page panel panel-default">
-        <div class="panel-body">
-            <ul class="pager">
-                <li id="sort-by">Sort results by</li>
-
-                <li>
-                    @Html.ActionLink(
-                   "Departure",
-                   "Availability",
-                   "Home",
-                   new { fromAirport = Model.FromAirport, toAirport = Model.ToAirport, sortBy = ViewBag.SortByDeparture },
-                   new { @class = "SortButton" })
-                </li>
-
-                <li>
-                    @Html.ActionLink(
-                   "Price",
-                   "Availability",
-                   "Home",
-                   new { fromAirport = Model.FromAirport, toAirport = Model.ToAirport, sortBy = ViewBag.SortByPrice },
-                   new { @class = "SortButton" })
-                </li>
-
-                <li>
-                    @Html.ActionLink(
-                   "Flight",
-                   "Availability",
-                   "Home",
-                   new { fromAirport = Model.FromAirport, toAirport = Model.ToAirport, sortBy = ViewBag.SortByFlight },
-                   new { @class = "SortButton" })
-                </li>
-            </ul>
-        </div>
+    <div class=" col-lg-3 mobile-col-lg-3">
+        @Html.TextBoxFor(m => m.ToAirport, new { @class = "form-control input-lg", placeholder = "To City" })
+        @Html.ValidationMessageFor(m => m.ToAirport)
     </div>
+    <div>
+        <button type="button" id="submit-button" class="btn btn-primary mobile-center-block">
+            <img src="~/Content/icons/form-send-button-right-arrow.png" />
+        </button>
+    </div>
+</div>
 
-    <table class="flights-page table table-striped table-hover">
-        <thead>
-            <tr class="panel">
-                <th>Flight #</th>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th>Main Cabin</th>
-                <th>First Class</th>
-            </tr>
-        </thead>
+<div id="flights-results"></div>
 
-        <tbody id="flights-results">
-            @{
-                foreach (var flight in Model.Flights)
-                {
-                    var departureTime = flight.Departs.ToString("hh:mm tt");
-                    var arrivalTime = flight.Arrives.ToString("hh:mm tt");
-                    <tr>
-                        <td>
-                            @flight.FlightNumber
-                        </td>
-                        <td>
-                            <b>@departureTime</b> <small>(@flight.From)</small>
-                        </td>
-                        <td id="progress-bar-in-table">
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-warning"></div>
-                            </div>
-                        </td>
-                        <td>
-                            <b>@arrivalTime</b> <small>(@flight.To)</small>
-                        </td>
-                        <td class="td-price">
-                            USD @flight.MainCabinPrice
-                        </td>
-                        <td class="td-price">
-                            USD @flight.FirstClassPrice
-                        </td>
-                    </tr>
-                }
-            }
-
-        </tbody>
-    </table>
-
-    <script>
-        $('.home-page').hide();
-        $('.flights-page').show();
-    </script>
-}
 
 @* Auto Complete *@
 <script type="text/javascript">
@@ -192,19 +65,19 @@ else
             autoFocus: true,
         });
     });
+</script>
 
-    @*$(document).ready(function () {
-        $("#submit-button").click(function () {
-            var fromAirport = $("#FromAirport").val();
-            var toAirport = $("#ToAirport").val();
-            $.ajax({
-                url: '@Url.Action("Search","Home")',
-                method: 'POST',
-                cache: false,
-                data: { FromAirport: fromAirport, ToAirport: toAirport }
-            }).done(function (response) {
-                $("#flights-results").text(response);
-            });
+<script type="text/javascript">
+    $("#submit-button").click(function () {
+        var from = $("#FromAirport").val();
+        var to = $("#ToAirport").val();
+        $.ajax({
+            url: '/Home/Search',
+            method: 'POST',
+            cache: false,
+            data: { FromAirport: from, ToAirport: to }
+        }).done(function (response) {
+            $("#flights-results").html(response);
         });
-    });*@
-</script> 
+    });
+</script>
