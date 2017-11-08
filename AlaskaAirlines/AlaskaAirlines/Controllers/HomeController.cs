@@ -15,9 +15,9 @@ namespace AlaskaAirlines.Controllers
         {
             var emptySearchView = new SearchViewModel
             {
-                FromAirport = "",
-                ToAirport = "",
-                Flights = new List<Flight>()
+                FromAirport = null,
+                ToAirport = null,
+                Flights = null
             };
             return View(emptySearchView);
         }
@@ -37,17 +37,17 @@ namespace AlaskaAirlines.Controllers
         public ActionResult Search(SearchViewModel searchViewModel)
         {
             //Form Validation
-            if (!ModelState.IsValid)
-            {
-                var sameViewModel = new SearchViewModel
-                {
-                    FromAirport = searchViewModel.FromAirport,
-                    ToAirport = searchViewModel.ToAirport,
-                    Flights = new List<Flight>()
-                };
+            //if (!ModelState.IsValid)
+            //{
+            //    var sameViewModel = new SearchViewModel
+            //    {
+            //        FromAirport = searchViewModel.FromAirport,
+            //        ToAirport = searchViewModel.ToAirport,
+            //        Flights = new List<Flight>()
+            //    };
 
-                return View("Index", sameViewModel);
-            }
+            //    return View("Index", sameViewModel);
+            //}
 
             var fromCode = "SEA";
             var toCode = "LAX";
