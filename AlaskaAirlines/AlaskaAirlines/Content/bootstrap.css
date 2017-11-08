@@ -46,6 +46,22 @@
     font-weight: 600;
 }
 
+#left-nav-bar-logo {
+    max-height: 30px;
+    max-width: 30px;
+    margin-right: 20px;
+    margin-top: -4px;
+}
+
+#right-nav-bar-flag {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+    #right-nav-bar-flag img {
+        max-height: 30px;
+    }
+
 #main-page-title {
     margin: 2% 0 2% 0;
     color: #EE765B;
@@ -5475,6 +5491,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     line-height: 21px;
     text-shadow: #2c3e50 0.5px 0px 1px;
     height: 60px;
+    background-color: #18BB9C;
 }
 
     .navbar-brand:hover,
