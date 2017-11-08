@@ -21,22 +21,21 @@
     @Html.AntiForgeryToken()
     <div class="home-page form-group">
         <div class=" col-lg-3 col-lg-offset-3 mobile-col-lg-3">
-            @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", placeholder = "Eg. Seattle" })
+            @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", id = "FromAirport", placeholder = "Eg. Seattle" })
             @Html.ValidationMessageFor(m => m.FromAirport)
         </div>
 
         <div class=" col-lg-3 mobile-col-lg-3">
-            @Html.TextBoxFor(m => m.ToAirport, new { @class = "form-control input-lg", placeholder = "To City" })
+            @Html.TextBoxFor(m => m.ToAirport, new { @class = "form-control input-lg", id = "ToAirport", placeholder = "To City" })
             @Html.ValidationMessageFor(m => m.ToAirport)
         </div>
         <div>
-            <button type="submit" class="btn btn-primary mobile-center-block">
-                <img src="~/Content/icons/form-send-button-right-arrow.png"/>
+            <button type="submit" id="submit-button" class="btn btn-primary mobile-center-block">
+                <img src="~/Content/icons/form-send-button-right-arrow.png" />
             </button>
         </div>
     </div>
 }
-
 
 @* Display no flights Banner when no flights available *@
 @if (Model.Flights.Count == 0)
@@ -49,10 +48,8 @@
             </h4>
 
             <a href="/" class="btn btn-info pull-right">Go Back</a>
-
         </div>
     </div>
-
 }
 else
 {
@@ -62,7 +59,7 @@ else
             <div class="text-center">
                 <h1>
                     @Model.FromAirport
-                    <img src="~/Content/icons/arrow-pointing-to-right.png"/>
+                    <img src="~/Content/icons/arrow-pointing-to-right.png" />
                     @Model.ToAirport
                 </h1>
             </div>
@@ -118,7 +115,8 @@ else
                 <th>First Class</th>
             </tr>
         </thead>
-        <tbody>
+
+        <tbody id="flights-results">
             @{
                 foreach (var flight in Model.Flights)
                 {
@@ -148,14 +146,11 @@ else
                     </tr>
                 }
             }
-        </tbody>
-    </table>
-    <script>
-        $('.home-page').hide();
-        $('.flights-page').show();
-    </script>
-                }
 
+        </tbody>
+
+    </table>
+}
 
 @* Auto Complete *@
 <script type="text/javascript">
@@ -163,9 +158,9 @@ else
         $("#FromAirport, #ToAirport").autocomplete({
             source: function (request, response) {
                 $.ajax({
-                    url: "/Home/AutoComplete",
-                    type: "POST",
-                    dataType: "json",
+                    url: '/Home/AutoComplete',
+                    type: 'POST',
+                    dataType: 'json',
                     data: { Prefix: request.term },
                     success: function (data) {
                         response($.map(data, function (item) {
@@ -184,5 +179,20 @@ else
             },
             autoFocus: true,
         });
-    })
+    });
+
+    @*$(document).ready(function () {
+        $("#submit-button").click(function () {
+            var fromAirport = $("#FromAirport").val();
+            var toAirport = $("#ToAirport").val();
+            $.ajax({
+                url: '@Url.Action("Search","Home")',
+                method: 'POST',
+                cache: false,
+                data: { FromAirport: fromAirport, ToAirport: toAirport }
+            }).done(function (response) {
+                $("#flights-results").text(response);
+            });
+        });
+    });*@
 </script> 
