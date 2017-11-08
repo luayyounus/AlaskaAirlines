@@ -31,7 +31,7 @@ namespace AlaskaAirlines.Models
             }
             catch (FileNotFoundException ex)
             {
-                throw new ApplicationException("Error grabbing Flights CSV file:", ex);
+                throw new FileNotFoundException("Error grabbing Flights CSV file:", ex);
             }
         }
 
@@ -55,8 +55,38 @@ namespace AlaskaAirlines.Models
             }
             catch (FileNotFoundException ex)
             {
-                throw new ApplicationException("Error grabbing Airports CSV file:", ex);
+                throw new FileNotFoundException("Error grabbing Airports CSV file:", ex);
             }
+        }
+
+        public static Dictionary<string, string> GetAllAirportsDictionary()
+        {
+            try
+            {
+                using (System.IO.StreamReader reader = new System.IO.StreamReader(AppDomain.CurrentDomain.BaseDirectory + @"/Models/Csv/airports.csv"))
+                {
+                    var csv = new CsvReader(reader);
+                    IEnumerable<Airport> airports = csv.GetRecords<Airport>();
+
+                    Dictionary<string, string> allAirports = new Dictionary<string, string>();
+
+                    foreach (Airport airport in airports)
+                    {
+                        allAirports.Add(airport.Name, airport.Code);
+                    }
+                    return allAirports;
+                }
+            }
+            catch (FileNotFoundException ex)
+            {
+                throw new FileNotFoundException("Error grabbing Airports CSV file:", ex);
+            }
+        }
+
+        public static string GetCodeForName(string airportName)
+        {
+            Dictionary<string, string> allAirports = GetAllAirportsDictionary();
+            return allAirports[airportName];
         }
     }
 }
