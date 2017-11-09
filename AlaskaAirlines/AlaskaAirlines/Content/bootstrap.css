@@ -103,12 +103,28 @@ html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-    margin: 0;
+    margin: 0 0 50px 0;
     max-width: 100%;
 }
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+    footer p {
+        float: right;
+        margin: 10px 20px 12px 0;
+        color: #2c3e50;
+        font-weight: 200;
+    }
 
 article,
 aside,
@@ -5784,7 +5800,6 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
         .navbar-default .navbar-brand:hover,
         .navbar-default .navbar-brand:focus {
             color: #ffffff;
-            background-color: transparent;
         }
 
     .navbar-default .navbar-text {
@@ -6179,6 +6194,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
             .pager li > a:focus {
                 text-decoration: none;
                 background-color: #0f7864;
+                cursor: pointer;
             }
 
     .pager .next > a,
@@ -6940,7 +6956,11 @@ button.list-group-item-danger {
 }
 
 .panel-body {
-    padding: 15px;
+    padding: 5px;
+}
+
+.panel-body-margin {
+    margin: 5px;
 }
 
 .panel-heading {
