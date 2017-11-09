@@ -1,0 +1,30 @@
+﻿@model AlaskaAirlines.ViewModels.SearchViewModel
+@{
+    foreach (var flight in Model.Flights)
+    {
+        var departureTime = flight.Departs.ToString("hh:mm tt");
+        var arrivalTime = flight.Arrives.ToString("hh:mm tt");
+        <tr>
+            <td>
+                @flight.FlightNumber
+            </td>
+            <td>
+                <b>@departureTime</b> <small>(@flight.From)</small>
+            </td>
+            <td id="progress-bar-in-table">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-warning"></div>
+                </div>
+            </td>
+            <td>
+                <b>@arrivalTime</b> <small>(@flight.To)</small>
+            </td>
+            <td class="td-price">
+                USD @flight.MainCabinPrice
+            </td>
+            <td class="td-price">
+                USD @flight.FirstClassPrice
+            </td>
+        </tr>
+    }
+}

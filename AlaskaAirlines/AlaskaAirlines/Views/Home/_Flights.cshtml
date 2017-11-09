@@ -1,0 +1,105 @@
+﻿@model AlaskaAirlines.ViewModels.SearchViewModel
+
+@if (Model.Flights == null)
+{
+    @*Do nothing if the user did not click search yet*@
+}
+else if (Model.Flights.Count == 0)
+{
+    @* Banner: display no flights banner when no flights available *@
+    <div class="flights-page panel panel-warning" id="no-flights-available">
+        <div class="panel-body panel-body-margin">
+
+            <h4 class="pull-left">
+                No flights available. Please pick different airports.
+            </h4>
+
+            <a href="/" class="btn btn-info pull-right">Go Back</a>
+        </div>
+    </div>
+    <script>
+        $('.home-page').hide();
+        $('.flights-page').show();
+    </script>
+}
+else
+{
+    @*Table Rendering*@
+
+    //Panel: From Airport - To Airport with progress bar
+    <div class="flights-page panel panel-default" id="from-to-banner">
+        <div class="panel-body">
+            <div class="text-center">
+                <h1>
+                    @Model.FromAirport
+                    @Html.Hidden("fromCode", (string)ViewBag.fromCode)
+
+                    <img src="~/Content/icons/arrow-pointing-to-right.png" />
+
+                    @Model.ToAirport
+                    @Html.Hidden("toCode", (string)ViewBag.toCode)
+                </h1>
+            </div>
+        </div>
+        <div class="flights-page progress progress-striped">
+            <div class="progress-bar progress-bar-success"></div>
+        </div>
+    </div>
+
+    //Panel : Sort Table By
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <ul class="pager">
+                <li id="sort-by">Sort results by</li>
+                <li id="Departure" class="sort">
+                    <a class="SortButton">Departure</a>
+                </li>
+                <li id="Price" class="sort">
+                    <a class="SortButton">Price</a>
+                </li>
+                <li id="Flight" class="sort">
+                    <a class="SortButton">Flight #</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <table class="flights-page table table-striped table-hover">
+        <thead>
+            <tr class="panel">
+                <th>Flight #</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>Main Cabin</th>
+                <th>First Class</th>
+            </tr>
+        </thead>
+
+        <tbody id="table-body">
+            @{Html.RenderPartial("_FlightsTable");}
+        </tbody>
+    </table>
+
+    <script>
+        $('.home-page').hide();
+        $('.flights-page').show();
+    </script>
+}
+
+
+<script type="text/javascript">
+        $("li.sort").click(function () {
+            var from = $("#fromCode").attr("value");
+            var to = $("#toCode").attr("value");
+            var sort = $(this).attr('id');
+            $.ajax({
+                url: '/Home/SortTable',
+                method: 'POST',
+                cache: false,
+                data: { fromAirport: from, toAirport: to, sortBy: sort }
+            }).done(function (response) {
+                $("#table-body").html(response);
+            });
+        });
+</script> 
