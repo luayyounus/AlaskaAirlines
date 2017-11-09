@@ -38,71 +38,6 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 
-
-
-.flights-page {
-    display: none;
-}
-
-
-
-.td-price {
-    font-weight: 600;
-}
-
-#left-nav-bar-logo {
-    max-height: 30px;
-    max-width: 30px;
-    margin-right: 20px;
-    margin-top: -4px;
-}
-
-#right-nav-bar-flag {
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
-    #right-nav-bar-flag img {
-        max-height: 30px;
-    }
-
-#main-page-title {
-    margin: 2% 0 2% 0;
-    color: #EE765B;
-    text-shadow: white 0px 0px 1px;
-    stroke-linejoin: round;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-    font-weight: 600;
-    font-style: italic;
-}
-
-#no-flights-available {
-    margin: 5% 30% 0 30%;
-}
-
-
-#from-to-banner {
-    margin: 0 5% 0 5%;
-}
-
-    #from-to-banner img {
-        max-height: 50px;
-        margin: 0 15px 0 15px;
-        padding: 0;
-    }
-
-#sort-by {
-    margin-right: 10px;
-}
-
-#progress-bar-in-table {
-    width: 200px;
-    padding-top: 30px;
-    padding-bottom: 0;
-}
-
-
-
 html {
     font-family: sans-serif;
     -ms-text-size-adjust: 100%;
@@ -121,7 +56,7 @@ footer {
     bottom: 0;
     width: 100%;
     height: 50px;
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Calibri, 'Trebuchet MS', sans-serif;
 }
     footer p {
         float: right;
@@ -1517,7 +1452,7 @@ html {
 }
 
 body {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Calibri, 'Trebuchet MS', sans-serif;
     font-size: 15px;
     line-height: 1.42857143;
     color: #2c3e50;

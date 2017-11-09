@@ -1,7 +1,66 @@
-﻿.field-validation-error {
+﻿#left-nav-bar-logo {
+    max-height: 30px;
+    max-width: 30px;
+    margin-right: 20px;
+    margin-top: -4px;
+}
+
+#main-page-title {
+    margin: 2% 0 2% 0;
+    color: #EE765B;
+    text-shadow: white 0px 0px 1px;
+    stroke-linejoin: round;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: 600;
+    font-style: italic;
+}
+
+#right-nav-bar-flag {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+    #right-nav-bar-flag img {
+        max-height: 30px;
+    }
+
+.field-validation-error {
     color: #363636;
 }
 
 .input-validation-error {
     border: 2px solid #18bc9c;
+}
+
+.flights-page {
+    display: none;
+}
+
+.td-price {
+    font-weight: 600;
+}
+
+#no-flights-available {
+    margin: 5% 30% 0 30%;
+}
+
+
+#from-to-banner {
+    margin: 0 5% 0 5%;
+}
+
+    #from-to-banner img {
+        max-height: 50px;
+        margin: 0 15px 0 15px;
+        padding: 0;
+    }
+
+#sort-by {
+    margin-right: 10px;
+}
+
+#progress-bar-in-table {
+    width: 200px;
+    padding-top: 30px;
+    padding-bottom: 0;
 }
