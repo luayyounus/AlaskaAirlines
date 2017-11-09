@@ -19,8 +19,7 @@ namespace AlaskaAirlines.Controllers
         [HttpPost]
         public JsonResult AutoComplete(string Prefix)
         {
-            Csv csv = new Csv();
-            List<Airport> listOfAirports = csv.GetAllAirports();
+            List<Airport> listOfAirports = Csv.GetAllAirports();
 
             var Airport = (from A in listOfAirports where A.Name.ToLower().Contains(Prefix.ToLower()) select new { A.Name });
 
@@ -35,9 +34,8 @@ namespace AlaskaAirlines.Controllers
             {
                 return View(searchViewModel);
             }
-            Csv csv = new Csv();
-            var fromCode = csv.GetCodeForName(searchViewModel.FromAirport);
-            var toCode = csv.GetCodeForName(searchViewModel.ToAirport);
+            var fromCode = Csv.GetCodeForName(searchViewModel.FromAirport);
+            var toCode = Csv.GetCodeForName(searchViewModel.ToAirport);
 
             return RedirectToAction("Search", "Flight", new { fromAirport = fromCode, toAirport = toCode });
         }

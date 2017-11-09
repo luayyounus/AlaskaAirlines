@@ -18,9 +18,6 @@ namespace AlaskaAirlines.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.fromCode = fromAirport;
-            ViewBag.toCode = toAirport;
-
             Csv csv = new Csv();
             List<Flight> flights = csv.SearchFlights(fromAirport, toAirport);
 
