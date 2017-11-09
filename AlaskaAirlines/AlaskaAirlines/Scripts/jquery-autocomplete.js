@@ -4,9 +4,11 @@
             $.ajax({
                 url: '/Home/AutoComplete',
                 type: 'POST',
-                dataType: 'json',
+                dataType: 'JSON',
                 data: { Prefix: request.term },
                 success: function (data) {
+                    $("#FromAirport_validationMessage").remove();
+                    $("#ToAirport_validationMessage").remove();
                     response($.map(data, function (item) {
                         return { label: item.Name, value: item.Name };
                     }));

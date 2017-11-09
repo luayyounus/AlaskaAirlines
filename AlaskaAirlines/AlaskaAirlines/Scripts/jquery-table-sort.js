@@ -4,7 +4,7 @@
         var to = $("#toCode").attr("value");
         var sort = $(this).attr('id');
         $.ajax({
-            url: '/Home/SortTable',
+            url: '/Flight/SortTable',
             method: 'POST',
             cache: false,
             data: { fromAirport: from, toAirport: to, sortBy: sort }
