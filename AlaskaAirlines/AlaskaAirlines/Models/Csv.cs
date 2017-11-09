@@ -94,5 +94,24 @@ namespace AlaskaAirlines.Models
 
             return allAirports[airportName];
         }
+
+        public static List<Flight> SortFlights(List<Flight> flights,string sortType)
+        {
+            List<Flight> sortedFlights = new List<Flight>();
+
+            switch (sortType)
+            {
+                case "Flight":
+                    sortedFlights = flights.OrderBy(flight => flight.FlightNumber).ToList();
+                    break;
+                case "Departure":
+                    sortedFlights = flights.OrderBy(flightTime => flightTime.Departs.TimeOfDay).ToList();
+                    break;
+                case "Price":
+                    sortedFlights = flights.OrderBy(flightPrice => flightPrice.MainCabinPrice).ToList();
+                    break;
+            }
+            return sortedFlights;
+        }
     }
 }
