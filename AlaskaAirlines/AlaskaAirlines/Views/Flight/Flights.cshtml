@@ -33,12 +33,12 @@ else
             <div class="text-center">
                 <h1>
                     @Model.FromAirport
-                    @Html.Hidden("fromCode", (string)ViewBag.fromCode)
+                    @Html.Hidden("fromCode", Model.FromAirport)
 
                     <img src="~/Content/icons/arrow-pointing-to-right.png" />
 
                     @Model.ToAirport
-                    @Html.Hidden("toCode", (string)ViewBag.toCode)
+                    @Html.Hidden("toCode", Model.ToAirport)
                 </h1>
             </div>
         </div>
