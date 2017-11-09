@@ -16,7 +16,6 @@
 
 
 @* Search Form *@
-@Html.AntiForgeryToken()
 <div class="home-page form-group">
     <div class=" col-lg-3 col-lg-offset-3 mobile-col-lg-3">
         @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", placeholder = "Eg. Seattle" })
@@ -37,49 +36,6 @@
 @{Html.RenderPartial("_Flights");}
 <div id="flights-results"></div>
 
-@*Input Auto Complete *@
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#FromAirport, #ToAirport").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: '/Home/AutoComplete',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: { Prefix: request.term },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.Name, value: item.Name };
-                        }))
-                    }
-                })
-            },
-            change: function (event, ui) {
-                if (!ui.item) {
-                    $(this).val('');
-                    $this.focus();
-                    $()
-                }
-            },
-            autoFocus: true,
-        });
-    });
-</script>
-
-
-<script type="text/javascript">
-    $("#submit-button").click(function () {
-        var from = $("#FromAirport").val();
-        var to = $("#ToAirport").val();
-        $.ajax({
-            url: '/Home/Search',
-            method: 'POST',
-            cache: false,
-            data: { FromAirport: from, ToAirport: to }
-        }).done(function (response) {
-            $("#flights-results").html(response);
-        }).fail(function () {
-            alert("failed submitting form")
-        });
-    });
+<script>
+    submitForm();
 </script>
