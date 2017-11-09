@@ -6,6 +6,7 @@
     <title>@Page.Title</title>
     <link href="~/Content/themes/base/jquery-ui.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
     @Styles.Render("~/Content/css")
     @RenderSection("head", required: false)
@@ -14,5 +15,6 @@
     @Html.Partial("_NavBar")
     @RenderBody()
     @RenderSection("scripts", required: false)
+    @Html.Partial("_Footer")
 </body>
 </html>

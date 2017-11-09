@@ -7,40 +7,24 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/" style="background-color: #18BB9C">
-                <img class="pull-left" style="max-height:30px; max-width: 30px; margin-right: 20px; margin-top: -4px;" src="~/Content/icons/nav-logo-takeoff-the-plane-white.png" />
+            <a class="navbar-brand" href="/">
+                <img class="pull-left" id="left-nav-bar-logo" src="~/Content/icons/nav-logo-takeoff-the-plane-white.png" />
                 Alaska Airlines
             </a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a class="home-button-nav" >HOME</a></li>
-            </ul>
-
-            <ul class="nav navbar-nav">
-                <li><a class="flights-button-nav" >FLIGHTS</a></li>
+                <li><a class="home-button-nav" href="/">SEARCH</a></li>
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="#" style="padding-top: 15px; padding-bottom: 15px; ">
-                        <img style="max-height: 30px;" src="~/Content/icons/nav-right-us-flag.png" />
+                    <a href="#" id="right-nav-bar-flag">
+                        <img src="~/Content/icons/nav-right-us-flag.png" />
                     </a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
-
-<script>
-    $('.home-button-nav').click(function () {
-        $('.flights-page').hide()
-        $('.home-page').show()
-    })
-
-    $('.flights-button-nav').click(function () {
-        $('.home-page').hide()
-        $('.flights-page').show()
-    })
-</script>
