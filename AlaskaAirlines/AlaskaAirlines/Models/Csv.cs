@@ -11,7 +11,7 @@ namespace AlaskaAirlines.Models
 {
     public class Csv
     {
-        public static List<Flight> SearchFlights(string fromAirport, string toAirport)
+        public List<Flight> SearchFlights(string fromAirport, string toAirport)
         {
             try
             {
@@ -35,7 +35,7 @@ namespace AlaskaAirlines.Models
             }
         }
 
-        public static List<Airport> GetAllAirports()
+        public List<Airport> GetAllAirports()
         {
             try
             {
@@ -59,7 +59,7 @@ namespace AlaskaAirlines.Models
             }
         }
 
-        public static Dictionary<string, string> GetAllAirportsDictionary()
+        public Dictionary<string, string> GetAllAirportsDictionary()
         {
             try
             {
@@ -83,7 +83,7 @@ namespace AlaskaAirlines.Models
             }
         }
 
-        public static string GetCodeForName(string airportName)
+        public string GetCodeForName(string airportName)
         {
             Dictionary<string, string> allAirports = GetAllAirportsDictionary();
 
@@ -95,7 +95,7 @@ namespace AlaskaAirlines.Models
             return allAirports[airportName];
         }
 
-        public static List<Flight> SortFlights(List<Flight> flights,string sortType)
+        public List<Flight> SortFlights(List<Flight> flights,string sortType)
         {
             List<Flight> sortedFlights = new List<Flight>();
 
