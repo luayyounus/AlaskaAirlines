@@ -1,13 +1,14 @@
 ﻿@model AlaskaAirlines.ViewModels.SearchViewModel
 
-@if (Model.Flights == null)
-{
-    @*Do nothing if the user did not click search yet*@
+@{
+    ViewBag.Title = "Flights";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-else if (Model.Flights.Count == 0)
+
+@if (Model.Flights.Count == 0)
 {
-    @* Banner: display no flights banner when no flights available *@
-    <div class="flights-page panel panel-warning" id="no-flights-available">
+    @* Banner: display when no flights available *@
+    <div id="no-flights-available" class="flights-page panel panel-warning">
         <div class="panel-body panel-body-margin">
 
             <h4 class="pull-left">
@@ -64,10 +65,12 @@ else
         </div>
     </div>
 
+
+    //Table
     <table class="flights-page table table-striped table-hover">
         <thead>
             <tr class="panel">
-                <th>Flight #</th>
+                <th>Flight No.</th>
                 <th></th>
                 <th></th>
                 <th></th>
