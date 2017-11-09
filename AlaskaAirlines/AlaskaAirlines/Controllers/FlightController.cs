@@ -37,20 +37,7 @@ namespace AlaskaAirlines.Controllers
         public ActionResult SortTable(string fromAirport, string toAirport, string sortBy)
         {
             List<Flight> flights = Csv.SearchFlights(fromAirport, toAirport);
-            List<Flight> sortedFlights = new List<Flight>();
-
-            switch (sortBy)
-            {
-                case "Flight":
-                    sortedFlights = flights.OrderBy(flight => flight.FlightNumber).ToList();
-                    break;
-                case "Departure":
-                    sortedFlights = flights.OrderBy(flightTime => flightTime.Departs.TimeOfDay).ToList();
-                    break;
-                case "Price":
-                    sortedFlights = flights.OrderBy(flightPrice => flightPrice.MainCabinPrice).ToList();
-                    break;
-            }
+            List<Flight> sortedFlights = Csv.SortFlights(flights, sortBy);
 
             var viewModel = new SearchViewModel
             {
