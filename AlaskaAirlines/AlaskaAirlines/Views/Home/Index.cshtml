@@ -2,17 +2,17 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="home-page">
-    <h2 class="text-center" id="main-page-title">
+<div id="page-title" class="home-page">
+    <h2 id="main-page-title" class="text-center">
         Where do you want to fly?
     </h2>
 </div>
 
-@*Moving Airplane Image*@
-<img src="~/Content/icons/flying-airplane.png" class="airplane-animate airplane-background-mobile-tablet" />
+@*Background Airplane*@
+<img id="Background-airplane" class="airplane-animate airplane-background-mobile-tablet" src="~/Content/icons/flying-airplane.png" />
 
 
 @* Search Form *@
@@ -34,10 +34,10 @@
     </div>
 </div>
 
+@{Html.RenderPartial("_Flights");}
 <div id="flights-results"></div>
 
-
-@* Auto Complete *@
+@*Input Auto Complete *@
 <script type="text/javascript">
     $(document).ready(function () {
         $("#FromAirport, #ToAirport").autocomplete({
@@ -51,7 +51,6 @@
                         response($.map(data, function (item) {
                             return { label: item.Name, value: item.Name };
                         }))
-
                     }
                 })
             },
@@ -67,6 +66,7 @@
     });
 </script>
 
+
 <script type="text/javascript">
     $("#submit-button").click(function () {
         var from = $("#FromAirport").val();
@@ -78,6 +78,8 @@
             data: { FromAirport: from, ToAirport: to }
         }).done(function (response) {
             $("#flights-results").html(response);
+        }).fail(function () {
+            alert("failed submitting form")
         });
     });
 </script>
