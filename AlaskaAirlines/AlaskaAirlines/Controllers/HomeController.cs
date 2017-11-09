@@ -36,95 +36,51 @@ namespace AlaskaAirlines.Controllers
         [HttpPost]
         public ActionResult Search(SearchViewModel searchViewModel)
         {
-            //Form Validation
-            //if (!ModelState.IsValid)
-            //{
-            //    var sameViewModel = new SearchViewModel
-            //    {
-            //        FromAirport = searchViewModel.FromAirport,
-            //        ToAirport = searchViewModel.ToAirport,
-            //        Flights = new List<Flight>()
-            //    };
+            var fromCode = Csv.GetCodeForName(searchViewModel.FromAirport);
+            var toCode = Csv.GetCodeForName(searchViewModel.ToAirport);
 
-            //    return View("Index", sameViewModel);
-            //}
-
-            var fromCode = "SEA";
-            var toCode = "LAX";
+            ViewBag.fromCode = fromCode;
+            ViewBag.toCode = toCode;
 
             List<Flight> flights = Csv.SearchFlights(fromCode, toCode);
 
             var viewModel = new SearchViewModel
             {
-                FromAirport = searchViewModel.FromAirport,
-                ToAirport = searchViewModel.ToAirport,
+                FromAirport = fromCode,
+                ToAirport = toCode,
                 Flights = flights
             };
-            return View("Index", viewModel);
+            return PartialView("_Flights", viewModel);
         }
 
-        //List<Airport> listOfAirports = Csv.GetAllAirports();
+        [HttpPost]
+        public ActionResult SortTable(string fromAirport, string toAirport, string sortBy)
+        {
+            List<Flight> flights = Csv.SearchFlights(fromAirport, toAirport);
+            List<Flight> sortedFlights = new List<Flight>();
 
-        //foreach (Airport airport in listOfAirports)
-        //{
-        //    if (airport.Name == searchViewModel.FromAirport || airport.Code == searchViewModel.FromAirport)
-        //    {
-        //        fromCode = airport.Code;
-        //    }
-        //    if (airport.Name == searchViewModel.ToAirport || airport.Code == searchViewModel.ToAirport)
-        //    {
-        //        toCode = airport.Code;
-        //    }
-        //}
+            switch (sortBy)
+            {
+                case "Flight":
+                    sortedFlights = flights.OrderBy(flight => flight.FlightNumber).ToList();
+                    break;
+                case "Departure":
+                    sortedFlights = flights.OrderBy(flightTime => flightTime.Departs.TimeOfDay).ToList();
+                    break;
+                case "Price":
+                    sortedFlights = flights.OrderBy(flightPrice => flightPrice.MainCabinPrice).ToList();
+                    break;
+                default:
+                    break;
+            }
 
-        //return RedirectToAction("Availability", "Home", new { fromAirport = fromCode, toAirport = toCode });
-
-
-        //[Route("home/availability/{fromAirport:maxlength(3):minlength(3)}/{toAirport:maxlength(3):minlength(3)}/{sortBy?}")]
-        //[HttpGet]
-        //public ActionResult Availability(string fromAirport, string toAirport, string sortBy)
-        //{
-
-        //    ViewBag.SortByFlight = string.IsNullOrWhiteSpace(sortBy) ? "Flight" : "";
-        //    ViewBag.SortByDeparture = "Departure";
-        //    ViewBag.SortByPrice = "Price";
-
-        //    List<Flight> sortedFlights = new List<Flight>();
-
-        //    if (!String.IsNullOrWhiteSpace(sortBy))
-        //    {
-        //        if (sortBy == "Flight")
-        //        {
-        //            sortedFlights = flights.OrderBy(flight => flight.FlightNumber).ToList();
-        //        }
-        //        else if (sortBy == "Departure")
-        //        {
-        //            sortedFlights = flights.OrderBy(flightTime => flightTime.Departs.TimeOfDay).ToList();
-        //        }
-        //        else if (sortBy == "Price")
-        //        {
-        //            sortedFlights = flights.OrderBy(flightPrice => flightPrice.MainCabinPrice).ToList();
-        //        }
-        //    }
-        //    else
-        //    {
-        //        sortedFlights = flights;
-        //    }
-
-        //    var viewModel = new SearchViewModel
-        //    {
-        //        FromAirport = fromAirport,
-        //        ToAirport = toAirport,
-        //        Flights = sortedFlights
-        //    };
-        //    return View("index", viewModel);
-        //}
-
-        //[HttpGet]
-        //public ActionResult SortFlights(SearchViewModel searchModel, string sortBy)
-        //{
-        //    var viewModel = Availability(searchModel.FromAirport, searchModel.ToAirport, sortBy);
-        //    return PartialView("_Flights", viewModel);
-        //}
+            var viewModel = new SearchViewModel
+            {
+                FromAirport = fromAirport,
+                ToAirport = toAirport,
+                Flights = sortedFlights
+            };
+            return PartialView("_FlightsTable", viewModel);
+        }
     }
 }
