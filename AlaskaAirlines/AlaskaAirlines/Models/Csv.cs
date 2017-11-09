@@ -86,6 +86,12 @@ namespace AlaskaAirlines.Models
         public static string GetCodeForName(string airportName)
         {
             Dictionary<string, string> allAirports = GetAllAirportsDictionary();
+
+            if(!allAirports.ContainsKey(airportName))
+            {
+                return string.Empty;
+            }
+
             return allAirports[airportName];
         }
     }
