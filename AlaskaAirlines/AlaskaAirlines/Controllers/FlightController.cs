@@ -10,7 +10,6 @@ namespace AlaskaAirlines.Controllers
 {
     public class FlightController : Controller
     {
-
         [HttpGet]
         public ActionResult Search(string fromAirport, string toAirport)
         {
@@ -22,7 +21,8 @@ namespace AlaskaAirlines.Controllers
             ViewBag.fromCode = fromAirport;
             ViewBag.toCode = toAirport;
 
-            List<Flight> flights = Csv.SearchFlights(fromAirport, toAirport);
+            Csv csv = new Csv();
+            List<Flight> flights = csv.SearchFlights(fromAirport, toAirport);
 
             var viewModel = new SearchViewModel
             {
@@ -36,8 +36,9 @@ namespace AlaskaAirlines.Controllers
         [HttpPost]
         public ActionResult SortTable(string fromAirport, string toAirport, string sortBy)
         {
-            List<Flight> flights = Csv.SearchFlights(fromAirport, toAirport);
-            List<Flight> sortedFlights = Csv.SortFlights(flights, sortBy);
+            Csv csv = new Csv();
+            List<Flight> flights = csv.SearchFlights(fromAirport, toAirport);
+            List<Flight> sortedFlights = csv.SortFlights(flights, sortBy);
 
             var viewModel = new SearchViewModel
             {
