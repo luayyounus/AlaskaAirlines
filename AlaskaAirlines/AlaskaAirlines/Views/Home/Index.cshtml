@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = Request.IsAjaxRequest() ? null : "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div id="page-title" class="home-page">
@@ -11,75 +11,24 @@
     </h2>
 </div>
 
-@*Background Airplane*@
-<img id="Background-airplane" class="airplane-animate airplane-background-mobile-tablet" src="~/Content/icons/flying-airplane.png" />
-
-
 @* Search Form *@
-@Html.AntiForgeryToken()
-<div class="home-page form-group">
-    <div class=" col-lg-3 col-lg-offset-3 mobile-col-lg-3">
-        @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", placeholder = "Eg. Seattle" })
-        @Html.ValidationMessageFor(m => m.FromAirport)
+@using (Html.BeginForm("Index", "Home", FormMethod.Post, new { @id = "search-form", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="home-page">
+        <div class="col-lg-3 col-lg-offset-3 mobile-col-lg-3">
+            @Html.TextBoxFor(m => m.FromAirport, new { @class = "form-control input-lg", placeholder = "Eg. Seattle" })
+            @Html.ValidationMessageFor(m => m.FromAirport)
+        </div>
+
+        <div class=" col-lg-3 mobile-col-lg-3">
+            @Html.TextBoxFor(m => m.ToAirport, new { @class = "form-control input-lg", placeholder = "To City" })
+            @Html.ValidationMessageFor(m => m.ToAirport)
+        </div>
+        <div>
+            <button id="submit-button" type="submit" class="btn btn-primary mobile-center-block">
+                <img src="~/Content/icons/form-send-button-right-arrow.png" />
+            </button>
+        </div>
     </div>
-
-    <div class=" col-lg-3 mobile-col-lg-3">
-        @Html.TextBoxFor(m => m.ToAirport, new { @class = "form-control input-lg", placeholder = "To City" })
-        @Html.ValidationMessageFor(m => m.ToAirport)
-    </div>
-    <div>
-        <button type="button" id="submit-button" class="btn btn-primary mobile-center-block">
-            <img src="~/Content/icons/form-send-button-right-arrow.png" />
-        </button>
-    </div>
-</div>
-
-@{Html.RenderPartial("_Flights");}
-<div id="flights-results"></div>
-
-@*Input Auto Complete *@
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#FromAirport, #ToAirport").autocomplete({
-            source: function (request, response) {
-                $.ajax({
-                    url: '/Home/AutoComplete',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: { Prefix: request.term },
-                    success: function (data) {
-                        response($.map(data, function (item) {
-                            return { label: item.Name, value: item.Name };
-                        }))
-                    }
-                })
-            },
-            change: function (event, ui) {
-                if (!ui.item) {
-                    $(this).val('');
-                    $this.focus();
-                    $()
-                }
-            },
-            autoFocus: true,
-        });
-    });
-</script>
-
-
-<script type="text/javascript">
-    $("#submit-button").click(function () {
-        var from = $("#FromAirport").val();
-        var to = $("#ToAirport").val();
-        $.ajax({
-            url: '/Home/Search',
-            method: 'POST',
-            cache: false,
-            data: { FromAirport: from, ToAirport: to }
-        }).done(function (response) {
-            $("#flights-results").html(response);
-        }).fail(function () {
-            alert("failed submitting form")
-        });
-    });
-</script>
+}
