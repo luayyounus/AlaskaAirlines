@@ -10,10 +10,10 @@ using AlaskaAirlines.Controllers;
 namespace AlaskaAirlinesTests
 {
     [TestClass]
-    public class ControllerTests
+    public class WhenRequestingTheIndexPage
     {
         [TestMethod]
-        public void Index()
+        public void ThenReturnTheHomeView()
         {
             //Arrange
             HomeController homeController = new HomeController();
