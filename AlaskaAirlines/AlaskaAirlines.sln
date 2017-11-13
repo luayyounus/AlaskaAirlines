@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2002
+VisualStudioVersion = 15.0.27004.2008
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlaskaAirlines", "AlaskaAirlines\AlaskaAirlines.csproj", "{9085B455-4F16-44D4-B14B-2DCD2E9BF96A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlaskaAirlinesTests", "AlaskaAirlinesTests\AlaskaAirlinesTests.csproj", "{2D609F81-A6D7-40D8-A82C-907E86E66047}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{9085B455-4F16-44D4-B14B-2DCD2E9BF96A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9085B455-4F16-44D4-B14B-2DCD2E9BF96A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9085B455-4F16-44D4-B14B-2DCD2E9BF96A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D609F81-A6D7-40D8-A82C-907E86E66047}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D609F81-A6D7-40D8-A82C-907E86E66047}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D609F81-A6D7-40D8-A82C-907E86E66047}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D609F81-A6D7-40D8-A82C-907E86E66047}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
