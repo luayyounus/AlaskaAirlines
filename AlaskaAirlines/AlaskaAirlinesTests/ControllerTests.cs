@@ -43,14 +43,33 @@ namespace AlaskaAirlinesTests
                 ToAirport = "",
                 Flights = null
             };
-            
-            //Act
             HomeController homeController = new HomeController();
+
+            //Act
             homeController.ModelState.AddModelError("formIncomplete", "formIncomplete");
             ViewResult result = homeController.Index(emptySearchViewModel) as ViewResult;
 
             //Assert
             Assert.IsTrue(result.ViewData.ModelState.Count > 0);
+        }
+    }
+
+    [TestClass]
+    public class WhenSearchingCSVForFlight
+    {
+        [TestMethod]
+        public void ThenReturnFilteredFlights()
+        {
+            //Arrange
+            string travellingFrom = "SEA";
+            string travellingTo = "LAX";
+            Csv csv = new Csv();
+
+            //Act
+            var result = csv.SearchFlights(travellingFrom, travellingTo);
+
+            //Assert
+            Assert.IsTrue(result.Count > 0);
         }
     }
 }
