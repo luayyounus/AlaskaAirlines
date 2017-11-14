@@ -77,9 +77,9 @@ namespace AlaskaAirlines.Models
                     return allAirports;
                 }
             }
-            catch (FileNotFoundException ex)
+            catch (DirectoryNotFoundException ex)
             {
-                throw new FileNotFoundException("Error grabbing Airports CSV file:", ex);
+                throw new DirectoryNotFoundException("Error grabbing Airports CSV file:", ex);
             }
         }
 
