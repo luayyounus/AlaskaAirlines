@@ -10,6 +10,7 @@ namespace AlaskaAirlines.Controllers
 {
     public class FlightController : Controller
     {
+        [Route("flight/search/{fromAirport:maxlength(3):minlength(3)}/{toAirport:maxlength(3):minlength(3)}")]
         [HttpGet]
         public ActionResult Search(string fromAirport, string toAirport)
         {
